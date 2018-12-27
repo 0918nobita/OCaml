@@ -9,8 +9,12 @@
   - : float = nan
   # sqrt (-1.);;
   - : float = nan
-  # infinity +. neg_infinity
+  # infinity +. neg_infinity;;
   - : float = nan
+  # "Hello, " ^ "OCaml!";;
+  - : string = "Hello, OCaml!"
+  # "Hello, OCaml!".[4];;
+  - : char = 'o'
 *)
 
 let () =
