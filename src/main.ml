@@ -40,5 +40,9 @@ let capitalize c =
 let andx b1 b2 = if b1 then b2 else false
 let orx b1 b2 = if b1 then true else b2
 
+(* 練習問題 3.3 *)
+let andx2 b1 b2 = not ((not b1) || (not b2))
+let orx2 b1 b2 = not ((not b1) && (not b2))
+
 let () =
   Printf.printf "Hello, OCaml!\n"
