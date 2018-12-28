@@ -15,6 +15,9 @@
   - : string = "Hello, OCaml!"
   # "Hello, OCaml!".[4];;
   - : char = 'o'
+  # let x = 2 and y = 3 in
+      (let y = x and x = y + 2 in x * y) + y;;
+  - : int = 13
 *)
 
 (* 練習問題 3.1 *)
