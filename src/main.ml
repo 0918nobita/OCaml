@@ -36,5 +36,9 @@ let capitalize c =
     then (char_of_int ((int_of_char c) - 32))
     else c
 
+(* 練習問題 3.2 *)
+let andx b1 b2 = if b1 then b2 else false
+let orx b1 b2 = if b1 then true else b2
+
 let () =
   Printf.printf "Hello, OCaml!\n"
