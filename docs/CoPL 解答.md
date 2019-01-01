@@ -106,3 +106,20 @@ x = true, y = 4 |- if x then y + 1 else y - 1 evalto 5 by E-IfT {
   }
 }
 ```
+
+### 第 38 問
+
+```
+x = 3 |- let x = x * 2 in x + x evalto 12 by E-Let {
+  x = 3 |- x * 2 evalto 6 by E-Times {
+    x = 3 |- x evalto 3 by E-Var1 {};
+    x = 3 |- 2 evalto 2 by E-Int {};
+    3 times 2 is 6 by B-Times {}
+  };
+  x = 3, x = 6 |- x + x evalto 12 by E-Plus {
+    x = 3, x = 6 |- x evalto 6 by E-Var1 {};
+    x = 3, x = 6 |- x evalto 6 by E-Var1 {};
+    6 plus 6 is 12 by B-Plus {}
+  }
+}
+```
