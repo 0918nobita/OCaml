@@ -38,3 +38,13 @@ if 3 < 4 then 1 < true else 3 - false evalto error by E-IfTError {
   }
 }
 ```
+
+## 局所定義と環境
+
+### 第 34 問
+
+```
+x = 3, y = 2 |- x evalto 3 by E-Var2 {
+  x = 3 |- x evalto 3 by E-Var1 {}
+}
+```
