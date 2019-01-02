@@ -160,3 +160,12 @@ x = 3 |- let x = x * 2 in x + x evalto 12 by E-Let {
 ```
 |- fun x -> x + 1 evalto ()[fun x -> x + 1] by E-Fun {}
 ```
+
+### 第 41 問
+
+```
+|- let y = 2 in fun x -> x + y evalto (y=2)[fun x -> x + y] by E-Let {
+  |- 2 evalto 2 by E-Int {};
+  y = 2 |- fun x -> x + y evalto (y=2)[fun x -> x + y] by E-Fun {}
+}
+```
