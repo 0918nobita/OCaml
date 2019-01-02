@@ -152,3 +152,11 @@ x = 3 |- let x = x * 2 in x + x evalto 12 by E-Let {
   }
 }
 ```
+
+## (再帰)関数抽象・適用
+
+### 第 40 問
+
+```
+|- fun x -> x + 1 evalto ()[fun x -> x + 1] by E-Fun {}
+```
