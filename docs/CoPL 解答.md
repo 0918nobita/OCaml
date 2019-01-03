@@ -4,7 +4,7 @@
 
 ### 第 31 問
 
-```
+```ocaml
 1 + true + 2 evalto error by E-PlusErrorL {
   1 + true evalto error by E-PlusBoolR {
     true evalto true by E-Bool {};
@@ -14,7 +14,7 @@
 
 ### 第 32 問
 
-```
+```ocaml
 if 2 + 3 then 1 else 3 evalto error by E-IfInt {
   2 + 3 evalto 5 by E-Plus {
     2 evalto 2 by E-Int {};
@@ -26,7 +26,7 @@ if 2 + 3 then 1 else 3 evalto error by E-IfInt {
 
 ### 第 33 問
 
-```
+```ocaml
 if 3 < 4 then 1 < true else 3 - false evalto error by E-IfTError {
   3 < 4 evalto true by E-Lt {
     3 evalto 3 by E-Int {};
@@ -43,7 +43,7 @@ if 3 < 4 then 1 < true else 3 - false evalto error by E-IfTError {
 
 ### 第 34 問
 
-```
+```ocaml
 x = 3, y = 2 |- x evalto 3 by E-Var2 {
   x = 3 |- x evalto 3 by E-Var1 {}
 }
@@ -51,7 +51,7 @@ x = 3, y = 2 |- x evalto 3 by E-Var2 {
 
 ### 第 35 問
 
-```
+```ocaml
 x = true, y = 4 |- if x then y + 1 else y - 1 evalto 5 by E-IfT {
   x = true, y = 4 |- x evalto true by E-Var2 {
     x = true |- x evalto true by E-Var1 {}
@@ -66,7 +66,7 @@ x = true, y = 4 |- if x then y + 1 else y - 1 evalto 5 by E-IfT {
 
 ### 第 36 問
 
-```
+```ocaml
 |- let x = 1 + 2 in x * 4 evalto 12 by E-Let {
   |- 1 + 2 evalto 3 by E-Plus {
     |- 1 evalto 1 by E-Int {};
@@ -83,7 +83,7 @@ x = true, y = 4 |- if x then y + 1 else y - 1 evalto 5 by E-IfT {
 
 ### 第 37 問
 
-```
+```ocaml
 |- let x = 3 * 3 in let y = 4 * x in x + y evalto 45 by E-Let {
   |- 3 * 3 evalto 9 by E-Times {
     |- 3 evalto 3 by E-Int {};
@@ -109,7 +109,7 @@ x = true, y = 4 |- if x then y + 1 else y - 1 evalto 5 by E-IfT {
 
 ### 第 38 問
 
-```
+```ocaml
 x = 3 |- let x = x * 2 in x + x evalto 12 by E-Let {
   x = 3 |- x * 2 evalto 6 by E-Times {
     x = 3 |- x evalto 3 by E-Var1 {};
@@ -126,7 +126,7 @@ x = 3 |- let x = x * 2 in x + x evalto 12 by E-Let {
 
 ### 第 39 問
 
-```
+```ocaml
 |- let x = let y = 3 - 2 in y * y in let y = 4 in x + y evalto 5 by E-Let {
   |- let y = 3 - 2 in y * y evalto 1 by E-Let {
     |- 3 - 2 evalto 1 by E-Minus {
@@ -157,13 +157,13 @@ x = 3 |- let x = x * 2 in x + x evalto 12 by E-Let {
 
 ### 第 40 問
 
-```
+```ocaml
 |- fun x -> x + 1 evalto ()[fun x -> x + 1] by E-Fun {}
 ```
 
 ### 第 41 問
 
-```
+```ocaml
 |- let y = 2 in fun x -> x + y evalto (y=2)[fun x -> x + y] by E-Let {
   |- 2 evalto 2 by E-Int {};
   y = 2 |- fun x -> x + y evalto (y=2)[fun x -> x + y] by E-Fun {}
@@ -172,7 +172,7 @@ x = 3 |- let x = x * 2 in x + x evalto 12 by E-Let {
 
 ### 第 42 問
 
-```
+```ocaml
 |- let sq = fun x -> x * x in sq 3 + sq 4 evalto 25 by E-Let {
   |- fun x -> x * x evalto ()[fun x -> x * x] by E-Fun {};
   sq = ()[fun x -> x * x] |- sq 3 + sq 4 evalto 25 by E-Plus {
@@ -206,7 +206,7 @@ let sm = fun f -> f 3 + f 4 in
   sm (fun x -> x * x)
 ```
 
-```
+```ocaml
 |- let sm = fun f -> f 3 + f 4 in sm (fun x -> x * x) evalto 25 by E-Let {
   |- fun f -> f 3 + f 4 evalto ()[fun f -> f 3 + f 4] by E-Fun {};
   sm = ()[fun f -> f 3 + f 4] |- sm (fun x -> x * x) evalto 25 by E-App {
@@ -246,7 +246,7 @@ in
   max 3 5
 ```
 
-```
+```ocaml
 |- let max = fun x -> fun y -> if x < y then y else x in max 3 5 evalto 5 by E-Let {
   |- fun x -> fun y -> if x < y then y else x evalto ()[fun x -> fun y -> if x < y then y else x] by E-Fun {};
   max = ()[fun x -> fun y -> if x < y then y else x] |- max 3 5 evalto 5 by E-App {
@@ -279,7 +279,7 @@ let a = 3 in
       f 4
 ```
 
-```
+```ocaml
 |- let a = 3 in let f = fun y -> y * a in let a = 5 in f 4 evalto 12 by E-Let {
   |- 3 evalto 3 by E-Int {};
   a = 3 |- let f = fun y -> y * a in let a = 5 in f 4 evalto 12 by E-Let {
@@ -313,7 +313,7 @@ in
   twice (fun x -> x * x) 2
 ```
 
-```
+```ocaml
 |- let twice = fun f -> fun x -> f (f x) in twice (fun x -> x * x) 2 evalto 16 by E-Let {
   |- fun f -> fun x -> f (f x) evalto ()[fun f -> fun x -> f (f x)] by E-Fun {};
   twice = ()[fun f -> fun x -> f (f x)] |- twice (fun x -> x * x) 2 evalto 16 by E-App {
@@ -342,6 +342,98 @@ in
         twice = ()[fun f -> fun x -> f (f x)], x = 4 |- x evalto 4 by E-Var1 {};
         twice = ()[fun f -> fun x -> f (f x)], x = 4 |- x evalto 4 by E-Var1 {};
         4 times 4 is 16 by B-Times {}
+      }
+    }
+  }
+}
+```
+
+### 第 47 問
+
+```ocaml
+let
+  twice = fun f -> fun x -> f (f x)
+in
+  twice twice (fun x -> x * x) 2
+```
+
+```ocaml
+|- let twice = fun f -> fun x -> f (f x) in twice twice (fun x -> x * x) 2 evalto 65536 by E-Let {
+  |- fun f -> fun x -> f (f x) evalto ()[fun f -> fun x -> f (f x)] by E-Fun {};
+  twice = ()[fun f -> fun x -> f (f x)] |- twice twice (fun x -> x * x) 2 evalto 65536 by E-App {
+    twice = ()[fun f -> fun x -> f (f x)] |- twice twice (fun x -> x * x) evalto (f = (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)])[fun x -> f (f x)] by E-App {
+      twice = ()[fun f -> fun x -> f (f x)] |- twice twice evalto (f = ()[fun f -> fun x -> f (f x)])[fun x -> f (f x)] by E-App {
+        twice = ()[fun f -> fun x -> f (f x)] |- twice evalto ()[fun f -> fun x -> f (f x)] by E-Var1 {};
+        twice = ()[fun f -> fun x -> f (f x)] |- twice evalto ()[fun f -> fun x -> f (f x)] by E-Var1 {};
+        f = ()[fun f -> fun x -> f (f x)] |- fun x -> f (f x) evalto (f = ()[fun f -> fun x -> f (f x)])[fun x -> f (f x)] by E-Fun {}
+      };
+      twice = ()[fun f -> fun x -> f (f x)] |- fun x -> x * x evalto (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] by E-Fun {};
+      f = ()[fun f -> fun x -> f (f x)], x = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] |- f (f x) evalto (f = (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)])[fun x -> f (f x)] by E-App {
+        f = ()[fun f -> fun x -> f (f x)], x = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] |- f evalto ()[fun f -> fun x -> f (f x)] by E-Var2 {
+          f = ()[fun f -> fun x -> f (f x)] |- f evalto ()[fun f -> fun x -> f (f x)] by E-Var1 {}
+        };
+        f = ()[fun f -> fun x -> f (f x)], x = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] |- f x evalto (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)] by E-App {
+          f = ()[fun f -> fun x -> f (f x)], x = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] |- f evalto ()[fun f -> fun x -> f (f x)] by E-Var2 {
+            f = ()[fun f -> fun x -> f (f x)] |- f evalto ()[fun f -> fun x -> f (f x)] by E-Var1 {}
+          };
+          f = ()[fun f -> fun x -> f (f x)], x = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] |- x evalto (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] by E-Var1 {};
+          f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] |- fun x -> f (f x) evalto (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)] by E-Fun {}
+        };
+        f = (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)] |- fun x -> f (f x) evalto (f = (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)])[fun x -> f (f x)] by E-Fun {}
+      }
+    };
+    twice = ()[fun f -> fun x -> f (f x)] |- 2 evalto 2 by E-Int {};
+    f = (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)], x = 2 |- f (f x) evalto 65536 by E-App {
+      f = (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)], x = 2 |- f evalto (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)] by E-Var2 {
+        f = (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)] |- f evalto (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)] by E-Var1 {}
+      };
+      f = (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)], x = 2 |- f x evalto 16 by E-App {
+        f = (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)], x = 2 |- f evalto (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)] by E-Var2 {
+          f = (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)] |- f evalto (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)] by E-Var1 {}
+        };
+        f = (f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x])[fun x -> f (f x)], x = 2 |- x evalto 2 by E-Var1 {};
+        f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x], x = 2 |- f (f x) evalto 16 by E-App {
+          f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x], x = 2 |- f evalto (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] by E-Var2 {
+            f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] |- f evalto (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] by E-Var1 {}
+          };
+          f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x], x = 2 |- f x evalto 4 by E-App {
+            f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x], x = 2 |- f evalto (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] by E-Var2 {
+              f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] |- f evalto (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] by E-Var1 {}
+            };
+            f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x], x = 2 |- x evalto 2 by E-Var1 {};
+            twice = ()[fun f -> fun x -> f (f x)], x = 2 |- x * x evalto 4 by E-Times {
+              twice = ()[fun f -> fun x -> f (f x)], x = 2 |- x evalto 2 by E-Var1 {};
+              twice = ()[fun f -> fun x -> f (f x)], x = 2 |- x evalto 2 by E-Var1 {};
+              2 times 2 is 4 by B-Times {}
+            }
+          };
+          twice = ()[fun f -> fun x -> f (f x)], x = 4 |- x * x evalto 16 by E-Times {
+            twice = ()[fun f -> fun x -> f (f x)], x = 4 |- x evalto 4 by E-Var1 {};
+            twice = ()[fun f -> fun x -> f (f x)], x = 4 |- x evalto 4 by E-Var1 {};
+            4 times 4 is 16 by B-Times {}
+          }
+        }
+      };
+      f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x], x = 16 |- f (f x) evalto 65536 by E-App {
+        f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x], x = 16 |- f evalto (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] by E-Var2 {
+          f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] |- f evalto (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] by E-Var1 {}
+        };
+        f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x], x = 16 |- f x evalto 256 by E-App {
+          f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x], x = 16 |- f evalto (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] by E-Var2 {
+            f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] |- f evalto (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x] by E-Var1 {}
+          };
+          f = (twice = ()[fun f -> fun x -> f (f x)])[fun x -> x * x], x = 16 |- x evalto 16 by E-Var1 {};
+          twice = ()[fun f -> fun x -> f (f x)], x = 16 |- x * x evalto 256 by E-Times {
+            twice = ()[fun f -> fun x -> f (f x)], x = 16 |- x evalto 16 by E-Var1 {};
+            twice = ()[fun f -> fun x -> f (f x)], x = 16 |- x evalto 16 by E-Var1 {};
+            16 times 16 is 256 by B-Times {}
+          }
+        };
+        twice = ()[fun f -> fun x -> f (f x)], x = 256 |- x * x evalto 65536 by E-Times {
+          twice = ()[fun f -> fun x -> f (f x)], x = 256 |- x evalto 256 by E-Var1 {};
+          twice = ()[fun f -> fun x -> f (f x)], x = 256 |- x evalto 256 by E-Var1 {};
+          256 times 256 is 65536 by B-Times {}
+        } 
       }
     }
   }
