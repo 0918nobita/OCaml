@@ -15,3 +15,5 @@ let string_of_judgement judgement =
 let rec int_of_nat = function
     Z -> 0
   | S (n') -> 1 + (int_of_nat n')
+
+exception Cannot_convert_negative_number_to_nat
