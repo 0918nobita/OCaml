@@ -1,3 +1,5 @@
+open List
+
 type nat = Z | S of nat
 
 type judgement = Plus of nat * nat * nat
@@ -22,3 +24,6 @@ let rec nat_of_int num =
   if num >= 0
     then (if num = 0 then Z else S (nat_of_int (num - 1)))
     else raise Cannot_convert_negative_number_to_nat
+
+let rec string_of_dt dt =
+  (string_of_judgement dt.conclusion) ^ " by " ^ dt.rule ^ " { " ^ (fold_left (^) "" (map string_of_dt dt.premise)) ^ " } "
