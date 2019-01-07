@@ -27,3 +27,13 @@ let rec nat_of_int num =
 
 let rec string_of_dt dt =
   (string_of_judgement dt.conclusion) ^ " by " ^ dt.rule ^ " { " ^ (fold_left (^) "" (map string_of_dt dt.premise)) ^ " } "
+
+let sample_dt = {
+  rule = "P-Succ";
+  conclusion = Plus (S Z, Z, S Z);
+  premise = [
+    { rule = "P-Zero"; conclusion = Plus (Z, Z, Z); premise = [] }
+  ]
+}
+
+let () = print_string @@ string_of_dt sample_dt
