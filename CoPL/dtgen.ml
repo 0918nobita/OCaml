@@ -11,3 +11,7 @@ let rec string_of_nat = function
 let string_of_judgement judgement =
   let Plus (n1, n2, n3) = judgement in
     (string_of_nat n1) ^ " plus " ^ (string_of_nat n2) ^ " is " ^ (string_of_nat n3)
+
+let rec int_of_nat = function
+    Z -> 0
+  | S (n') -> 1 + (int_of_nat n')
