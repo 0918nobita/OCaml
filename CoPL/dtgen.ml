@@ -17,3 +17,8 @@ let rec int_of_nat = function
   | S (n') -> 1 + (int_of_nat n')
 
 exception Cannot_convert_negative_number_to_nat
+
+let rec nat_of_int num =
+  if num >= 0
+    then (if num = 0 then Z else S (nat_of_int (num - 1)))
+    else raise Cannot_convert_negative_number_to_nat
