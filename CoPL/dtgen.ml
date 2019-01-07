@@ -26,7 +26,13 @@ let rec nat_of_int num =
     else raise Cannot_convert_negative_number_to_nat
 
 let rec string_of_dt dt =
-  (string_of_judgement dt.conclusion) ^ " by " ^ dt.rule ^ " { " ^ (fold_left (^) "" (map string_of_dt dt.premise)) ^ " } "
+  let
+    conclusion = string_of_judgement dt.conclusion and
+    premise = if length dt.premise <> 0
+      then (fold_left (^) " " (map (fun dt -> (string_of_dt dt) ^ "; ") dt.premise))
+      else ""
+  in
+    conclusion ^ " by " ^ dt.rule ^ " {" ^ premise ^ "}"
 
 let sample_dt = {
   rule = "P-Succ";
