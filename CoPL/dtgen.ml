@@ -36,14 +36,6 @@ let rec string_of_dt dt =
   in
     conclusion ^ " by " ^ dt.rule ^ " {" ^ premise ^ "}"
 
-let sample_dt = {
-  rule = "P-Succ";
-  conclusion = Plus (1, 0, 1);
-  premise = [
-    { rule = "P-Zero"; conclusion = Plus (0, 0, 0); premise = [] }
-  ]
-}
-
 exception Wrong_judgement
 
 let rec generate_dt judgement = match judgement with
