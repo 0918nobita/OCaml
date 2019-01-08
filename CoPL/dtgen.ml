@@ -2,7 +2,7 @@ open List
 
 type nat = Z | S of nat
 
-type judgement = Plus of int * int * int
+type judgement = Plus of int * int * int | Times of int * int * int
 
 type derivation_tree = { rule: string; conclusion : judgement; premise : derivation_tree list }
 
