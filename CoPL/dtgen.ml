@@ -28,14 +28,18 @@ let string_of_judgement judgement =
       | Lt2 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
       | Lt3 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
 
-let rec string_of_dt dt =
+let rec string_of_dt dt nests =
+  let rec spaces n = if n > 0 then " " ^ spaces (n - 1) else "" in
+  let premise_exists = length dt.premise <> 0 in
   let
     conclusion = string_of_judgement dt.conclusion and
-    premise = if length dt.premise <> 0
-      then (fold_left (^) " " (map (fun dt -> (string_of_dt dt) ^ "; ") dt.premise))
+    indent_b = spaces nests and
+    indent_e = if premise_exists then spaces nests else "" and
+    premise = if premise_exists
+      then (fold_left (^) "\n" (map (fun dt -> (string_of_dt dt (nests + 2)) ^ ";\n") dt.premise))
       else ""
   in
-    conclusion ^ " by " ^ dt.rule ^ " {" ^ premise ^ "}"
+    indent_b ^ conclusion ^ " by " ^ dt.rule ^ " {" ^ premise ^ indent_e ^ "}"
 
 exception Wrong_judgement
 
@@ -86,4 +90,4 @@ let () =
       | "lt3" -> Lt3 (int_of_string Sys.argv.(2), int_of_string Sys.argv.(3))
       | _ -> raise No_such_rule
   in
-    print_string @@ string_of_dt @@ generate_dt sample_judgement
+    print_string @@ string_of_dt (generate_dt sample_judgement) 0
