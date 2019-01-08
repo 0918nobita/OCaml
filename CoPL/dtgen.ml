@@ -2,7 +2,7 @@ open List
 
 type nat = Z | S of nat
 
-type judgement = Plus of int * int * int | Times of int * int * int | Lt1 of int * int | Lt2 of int * int
+type judgement = Plus of int * int * int | Times of int * int * int | Lt1 of int * int | Lt2 of int * int | Lt3 of int * int
 
 type derivation_tree = { rule: string; conclusion : judgement; premise : derivation_tree list }
 
@@ -26,6 +26,7 @@ let string_of_judgement judgement =
       | Times (n1, n2, n3) -> (nat_string n1) ^ " times " ^ (nat_string n2) ^ " is " ^ (nat_string n3)
       | Lt1 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
       | Lt2 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
+      | Lt3 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
 
 let rec string_of_dt dt =
   let
@@ -66,6 +67,12 @@ let rec generate_dt judgement = match judgement with
           then { rule = "L-Zero"; conclusion = judgement; premise = [] }
           else { rule = "L-SuccSucc"; conclusion = judgement; premise = [ generate_dt @@ Lt2 (sn1 - 1, sn2 - 1) ] })
       else raise Wrong_judgement
+  | Lt3 (n1, sn2) ->
+      if n1 >= 0 && sn2 >= 0 && n1 < sn2
+        then (if sn2 = n1 + 1
+          then { rule = "L-Succ"; conclusion = judgement; premise = [] }
+          else { rule = "L-SuccR"; conclusion = judgement; premise = [ generate_dt @@ Lt3 (n1, sn2 - 1) ] })
+        else raise Wrong_judgement
 
 exception No_such_rule
 
@@ -76,6 +83,7 @@ let () =
       | "times" -> Times (int_of_string Sys.argv.(2), int_of_string Sys.argv.(3), int_of_string Sys.argv.(4))
       | "lt1" -> Lt1 (int_of_string Sys.argv.(2), int_of_string Sys.argv.(3))
       | "lt2" -> Lt2 (int_of_string Sys.argv.(2), int_of_string Sys.argv.(3))
+      | "lt3" -> Lt3 (int_of_string Sys.argv.(2), int_of_string Sys.argv.(3))
       | _ -> raise No_such_rule
   in
     print_string @@ string_of_dt @@ generate_dt sample_judgement
