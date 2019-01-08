@@ -41,4 +41,20 @@ let sample_dt = {
   ]
 }
 
-let () = print_string @@ string_of_dt sample_dt
+exception Wrong_judgement
+
+let rec generate_dt judgement = match judgement with
+    Plus (0, n1, n2) ->
+      if n2 >= 0 && n1 = n2
+        then { rule = "P-Zero"; conclusion = judgement; premise = [] }
+        else raise Wrong_judgement
+  | Plus (n1, n2, n) ->
+      if n >= 0
+        then { rule = "P-Succ"; conclusion = judgement; premise = [ generate_dt @@ Plus (n1 - 1, n2, n - 1) ] }
+        else raise Wrong_judgement
+
+let () =
+  let
+    sample_judgement = Plus (int_of_string Sys.argv.(1), int_of_string Sys.argv.(2), int_of_string Sys.argv.(3))
+  in
+    print_string @@ string_of_dt @@ generate_dt sample_judgement
