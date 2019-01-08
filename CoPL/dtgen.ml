@@ -24,10 +24,6 @@ let string_of_judgement judgement =
   in
     (nat_string n1) ^ " plus " ^ (nat_string n2) ^ " is " ^ (nat_string n3)
 
-let rec int_of_nat = function
-    Z -> 0
-  | S (n') -> 1 + (int_of_nat n')
-
 let rec string_of_dt dt =
   let
     conclusion = string_of_judgement dt.conclusion and
