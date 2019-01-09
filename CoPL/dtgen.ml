@@ -1,3 +1,5 @@
+(* ocamlc str.cma dtgen.ml -o dtgen.out *)
+
 open List
 
 type nat = Z | S of nat
@@ -104,3 +106,10 @@ let () = let op = if Array.length Sys.argv >= 2 then Sys.argv.(1) else raise Wro
       | _ -> raise No_such_rule
   in
     print_string @@ string_of_dt (generate_dt sample_judgement) 0
+
+(*
+ * 算術式 e := int | e "+" e | e "*" e
+ * 判断 EvalTo := e "evalto" int
+ *)
+
+let lex = Str.split (Str.regexp " ")
