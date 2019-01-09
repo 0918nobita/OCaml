@@ -78,6 +78,7 @@ let rec generate_dt judgement = match judgement with
           else { rule = "L-SuccR"; conclusion = judgement; premise = [ generate_dt @@ Lt3 (n1, sn2 - 1) ] })
         else raise Wrong_judgement
 
+exception Wrong_argument
 exception No_such_rule
 
 let () =
