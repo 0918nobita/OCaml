@@ -81,14 +81,20 @@ let rec generate_dt judgement = match judgement with
 exception Wrong_argument
 exception No_such_rule
 
-let () =
+let () = let op = if Array.length Sys.argv >= 2 then Sys.argv.(1) else raise Wrong_argument in
   let
-    sample_judgement = match Sys.argv.(1) with
-        "plus" -> Plus (int_of_string Sys.argv.(2), int_of_string Sys.argv.(3), int_of_string Sys.argv.(4))
-      | "times" -> Times (int_of_string Sys.argv.(2), int_of_string Sys.argv.(3), int_of_string Sys.argv.(4))
-      | "lt1" -> Lt1 (int_of_string Sys.argv.(2), int_of_string Sys.argv.(3))
-      | "lt2" -> Lt2 (int_of_string Sys.argv.(2), int_of_string Sys.argv.(3))
-      | "lt3" -> Lt3 (int_of_string Sys.argv.(2), int_of_string Sys.argv.(3))
+    sample_judgement = match op with
+        "plus" | "times" -> (let (n1, n2, n3) = (int_of_string Sys.argv.(2), int_of_string Sys.argv.(3), int_of_string Sys.argv.(4)) in
+          match op with
+              "plus" -> Plus (n1, n2, n3)
+            | "times" -> Times (n1, n2, n3)
+            | _ -> raise No_such_rule)
+      | "lt1" | "lt2" | "lt3" -> (let (n1, n2) = (int_of_string Sys.argv.(2), int_of_string Sys.argv.(3)) in
+          match op with
+              "lt1" -> Lt1 (n1, n2)
+            | "lt2" -> Lt2 (n1, n2)
+            | "lt3" -> Lt3 (n1, n2)
+            | _ -> raise No_such_rule)
       | _ -> raise No_such_rule
   in
     print_string @@ string_of_dt (generate_dt sample_judgement) 0
