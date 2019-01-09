@@ -1,4 +1,4 @@
-(* ocamlc str.cma dtgen.ml -o dtgen.out *)
+(* ocamlopt str.cmxa dtgen.ml -o dtgen *)
 
 open List
 
@@ -112,4 +112,18 @@ let () = let op = if Array.length Sys.argv >= 2 then Sys.argv.(1) else raise Wro
  * 判断 EvalTo := e "evalto" int
  *)
 
-let lex = Str.split (Str.regexp " ")
+type word = Int of int | EvalTo | PlusOp | TimesOp
+
+exception SyntaxError
+
+let lex str = let is_integer str = Str.string_match (Str.regexp "^[1-9][0-9]*$") str 0 in
+  let
+    lex_word str = if is_integer str then Int (int_of_string str) else (
+      match str with
+          "evalto" -> EvalTo
+        | "+" -> PlusOp
+        | "*" -> TimesOp
+        | _ -> raise SyntaxError) and
+    words = if str <> "" then String.split_on_char ' ' str else []
+  in
+    map lex_word words
