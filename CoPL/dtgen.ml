@@ -13,11 +13,13 @@ let rec nat_of_int num =
     then (if num = 0 then Z else S (nat_of_int (num - 1)))
     else raise Cannot_convert_negative_number_to_nat
 
+type exp = Value of int | PlusExp of exp * exp | TimesExp of exp * exp
+
 type judgement = Plus of int * int * int
-               | Times of int * int * int
-               | Lt1 of int * int
-               | Lt2 of int * int
-               | Lt3 of int * int
+              | Times of int * int * int
+              | Lt1 of int * int
+              | Lt2 of int * int
+              | Lt3 of int * int
 
 let string_of_judgement judgement =
   let
