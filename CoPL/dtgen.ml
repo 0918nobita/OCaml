@@ -2,14 +2,6 @@ open List
 
 type nat = Z | S of nat
 
-type judgement = Plus of int * int * int
-               | Times of int * int * int
-               | Lt1 of int * int
-               | Lt2 of int * int
-               | Lt3 of int * int
-
-type derivation_tree = { rule: string; conclusion : judgement; premise : derivation_tree list }
-
 let rec string_of_nat = function
     Z -> "Z"
   | S (n') -> "S(" ^ (string_of_nat n') ^ ")"
@@ -21,6 +13,12 @@ let rec nat_of_int num =
     then (if num = 0 then Z else S (nat_of_int (num - 1)))
     else raise Cannot_convert_negative_number_to_nat
 
+type judgement = Plus of int * int * int
+               | Times of int * int * int
+               | Lt1 of int * int
+               | Lt2 of int * int
+               | Lt3 of int * int
+
 let string_of_judgement judgement =
   let
     nat_string n = string_of_nat @@ nat_of_int n
@@ -31,6 +29,8 @@ let string_of_judgement judgement =
       | Lt1 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
       | Lt2 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
       | Lt3 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
+
+type derivation_tree = { rule: string; conclusion : judgement; premise : derivation_tree list }
 
 let rec string_of_dt dt nests =
   let rec spaces n = if n > 0 then " " ^ spaces (n - 1) else "" in
