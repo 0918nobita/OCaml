@@ -143,3 +143,9 @@ let rec parse_times list =
     match rest with
         TimesOp :: r -> let (rhs, rest') = parse_times @@ r in (TimesExp (lhs, rhs), rest')
       | _ -> (lhs, rest)
+
+let rec parse_plus list =
+  let (lhs, rest) = parse_times list in
+    match rest with
+        PlusOp :: r -> let (rhs, rest') = parse_plus @@ r in (PlusExp (lhs, rhs), rest')
+      | _ -> (lhs, rest)
