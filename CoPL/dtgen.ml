@@ -137,3 +137,9 @@ let lex str = let is_integer str = Str.string_match (Str.regexp "^[1-9][0-9]*$")
 let parse_int = function
     Int n :: r -> (Value n, r)
   | _ -> raise SyntaxError
+
+let rec parse_times list =
+  let (lhs, rest) = parse_int list in
+    match rest with
+        TimesOp :: r -> let (rhs, rest') = parse_times @@ r in (TimesExp (lhs, rhs), rest')
+      | _ -> (lhs, rest)
