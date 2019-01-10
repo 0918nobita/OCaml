@@ -149,3 +149,18 @@ let rec parse_plus list =
     match rest with
         PlusOp :: r -> let (rhs, rest') = parse_plus @@ r in (PlusExp (lhs, rhs), rest')
       | _ -> (lhs, rest)
+
+let parse list =
+  let rec last2elements = function
+      [] | [_] -> failwith "Too few elements"
+    | [a; b] -> [a; b]
+    | _ :: r -> last2elements r
+  in
+  let rec rest_elements = function
+      [] | [_] -> failwith "Too few elements"
+    | [_; _] -> []
+    | a :: r -> a :: (rest_elements r)
+  in
+    match last2elements list with
+        [EvalToOp; Int n] -> let (arith_exp, _) = parse_plus @@ rest_elements list in EvalTo (arith_exp, n)
+      | _ -> raise SyntaxError
