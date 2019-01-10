@@ -55,6 +55,11 @@ let rec string_of_dt dt nests =
   in
     indent_b ^ conclusion ^ " by " ^ dt.rule ^ " {" ^ premise ^ indent_e ^ "}"
 
+let rec eval_exp = function
+    Value n -> n
+  | PlusExp (n1, n2) -> (eval_exp n1) + (eval_exp n2)
+  | TimesExp (n1, n2) -> (eval_exp n1) * (eval_exp n2)
+
 exception Wrong_judgement
 
 let rec generate_dt judgement = match judgement with
@@ -91,6 +96,30 @@ let rec generate_dt judgement = match judgement with
           then { rule = "L-Succ"; conclusion = judgement; premise = [] }
           else { rule = "L-SuccR"; conclusion = judgement; premise = [ generate_dt @@ Lt3 (n1, sn2 - 1) ] })
         else raise Wrong_judgement
+  | EvalTo (Value n1, n2) ->
+      if n1 = n2
+        then { rule = "E-Const"; conclusion = judgement; premise = [] }
+        else raise Wrong_judgement
+  | EvalTo (PlusExp (lhs, rhs), n) -> let n1 = eval_exp lhs and n2 = eval_exp rhs in
+      {
+        rule = "E-Plus";
+        conclusion = judgement;
+        premise = [
+          generate_dt @@ EvalTo (lhs, n1);
+          generate_dt @@ EvalTo (rhs, n2);
+          generate_dt @@ Plus (n1, n2, n)
+        ]
+      }
+  | EvalTo (TimesExp (lhs, rhs), n) -> let n1 = eval_exp lhs and n2 = eval_exp rhs in
+      {
+        rule = "E-Times";
+        conclusion = judgement;
+        premise = [
+          generate_dt @@ EvalTo (lhs, n1);
+          generate_dt @@ EvalTo (rhs, n2);
+          generate_dt @@ Times (n1, n2, n)
+        ]
+      }
 
 exception Wrong_argument
 exception No_such_rule
