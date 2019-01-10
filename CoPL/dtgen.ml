@@ -153,6 +153,15 @@ let rec parse_plus list =
         PlusOp :: r -> let (rhs, rest') = parse_plus @@ r in (PlusExp (lhs, rhs), rest')
       | _ -> (lhs, rest)
 
+let rec reverse_ast ast = match ast with
+      PlusExp (a, PlusExp (b, c)) ->
+        PlusExp (PlusExp (reverse_ast a, reverse_ast b), reverse_ast c)
+    | TimesExp (a, TimesExp (b, c)) ->
+        TimesExp (TimesExp (reverse_ast a, reverse_ast b), reverse_ast c)
+    | _ -> ast
+
+let parse_exp list = let (ast, _) = parse_plus list in reverse_ast ast
+
 let parse list =
   let rec last2elements = function
       [] | [_] -> failwith "Too few elements"
@@ -165,7 +174,7 @@ let parse list =
     | a :: r -> a :: (rest_elements r)
   in
     match last2elements list with
-        [EvalToOp; Int n] -> let (arith_exp, _) = parse_plus @@ rest_elements list in EvalTo (arith_exp, n)
+        [EvalToOp; Int n] -> EvalTo (parse_exp @@ rest_elements list, n)
       | _ -> raise SyntaxError
 
 exception Wrong_argument
