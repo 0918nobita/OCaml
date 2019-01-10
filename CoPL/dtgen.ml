@@ -2,22 +2,13 @@
 
 open List
 
-type nat = Z | S of nat
-
-let rec string_of_nat = function
-    Z -> "Z"
-  | S (n') -> "S(" ^ (string_of_nat n') ^ ")"
-
-exception Cannot_convert_negative_number_to_nat
-
-let rec nat_of_int num =
-  if num >= 0
-    then (if num = 0 then Z else S (nat_of_int (num - 1)))
-    else raise Cannot_convert_negative_number_to_nat
+let rec nat_string n =
+  if n >= 0 then match n with
+      0 -> "Z"
+    | _ -> "S(" ^ (nat_string (n - 1)) ^ ")"
+  else failwith "自然数ではありません"
 
 type exp = Value of int | PlusExp of (exp * exp) | TimesExp of (exp * exp)
-
-let nat_string n = string_of_nat @@ nat_of_int n
 
 let rec string_of_exp = function
     Value n -> nat_string n
