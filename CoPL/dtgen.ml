@@ -133,3 +133,7 @@ let lex str = let is_integer str = Str.string_match (Str.regexp "^[1-9][0-9]*$")
     words = if str <> "" then String.split_on_char ' ' str else []
   in
     map lex_word words
+
+let parse_int = function
+    Int n :: r -> (Value n, r)
+  | _ -> raise SyntaxError
