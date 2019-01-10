@@ -15,13 +15,15 @@ let rec nat_of_int num =
     then (if num = 0 then Z else S (nat_of_int (num - 1)))
     else raise Cannot_convert_negative_number_to_nat
 
-type exp = Value of int | PlusExp of exp * exp | TimesExp of exp * exp
+type exp = Value of int | PlusExp of (exp * exp) | TimesExp of (exp * exp)
+
 
 type judgement = Plus of int * int * int
               | Times of int * int * int
               | Lt1 of int * int
               | Lt2 of int * int
               | Lt3 of int * int
+              | EvalTo of exp * int
 
 let string_of_judgement judgement =
   let
@@ -112,7 +114,7 @@ let () = let op = if Array.length Sys.argv >= 2 then Sys.argv.(1) else raise Wro
  * 判断 EvalTo := e "evalto" int
  *)
 
-type word = Int of int | EvalTo | PlusOp | TimesOp
+type word = Int of int | EvalToOp | PlusOp | TimesOp
 
 exception SyntaxError
 
@@ -120,7 +122,7 @@ let lex str = let is_integer str = Str.string_match (Str.regexp "^[1-9][0-9]*$")
   let
     lex_word str = if is_integer str then Int (int_of_string str) else (
       match str with
-          "evalto" -> EvalTo
+          "evalto" -> EvalToOp
         | "+" -> PlusOp
         | "*" -> TimesOp
         | _ -> raise SyntaxError) and
