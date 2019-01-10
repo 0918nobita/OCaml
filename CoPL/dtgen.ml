@@ -17,6 +17,12 @@ let rec nat_of_int num =
 
 type exp = Value of int | PlusExp of (exp * exp) | TimesExp of (exp * exp)
 
+let nat_string n = string_of_nat @@ nat_of_int n
+
+let rec string_of_exp = function
+    Value n -> nat_string n
+  | PlusExp (exp1, exp2) -> (string_of_exp exp1) ^ " + " ^ (string_of_exp exp2)
+  | TimesExp (exp1, exp2) -> (string_of_exp exp1) ^ " * " ^ (string_of_exp exp2)
 
 type judgement = Plus of int * int * int
               | Times of int * int * int
@@ -26,15 +32,13 @@ type judgement = Plus of int * int * int
               | EvalTo of exp * int
 
 let string_of_judgement judgement =
-  let
-    nat_string n = string_of_nat @@ nat_of_int n
-  in
-    match judgement with
-        Plus (n1, n2, n3) -> (nat_string n1) ^ " plus " ^ (nat_string n2) ^ " is " ^ (nat_string n3)
-      | Times (n1, n2, n3) -> (nat_string n1) ^ " times " ^ (nat_string n2) ^ " is " ^ (nat_string n3)
-      | Lt1 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
-      | Lt2 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
-      | Lt3 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
+  match judgement with
+      Plus (n1, n2, n3) -> (nat_string n1) ^ " plus " ^ (nat_string n2) ^ " is " ^ (nat_string n3)
+    | Times (n1, n2, n3) -> (nat_string n1) ^ " times " ^ (nat_string n2) ^ " is " ^ (nat_string n3)
+    | Lt1 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
+    | Lt2 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
+    | Lt3 (n1, n2) -> (nat_string n1) ^ " is less than " ^ (nat_string n2)
+    | EvalTo (exp, n) -> (string_of_exp exp) ^ " evalto " ^ (nat_string n)
 
 type derivation_tree = { rule: string; conclusion : judgement; premise : derivation_tree list }
 
