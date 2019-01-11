@@ -137,16 +137,29 @@ let parse_int = function
   | _ -> raise SyntaxError
 
 let rec parse_times list =
-  let (lhs, rest) = parse_int list in
+  let (lhs, rest) = parse_brackets list in
     match rest with
         TimesOp :: r -> let (rhs, rest') = parse_times @@ r in (TimesExp (lhs, rhs), rest')
       | _ -> (lhs, rest)
-
-let rec parse_plus list =
+and parse_plus list =
   let (lhs, rest) = parse_times list in
     match rest with
         PlusOp :: r -> let (rhs, rest') = parse_plus @@ r in (PlusExp (lhs, rhs), rest')
       | _ -> (lhs, rest)
+and parse_brackets list =
+  let rec split_on acc list separator = match list with
+      [] -> failwith ""
+    | elem :: rest -> if elem = separator
+        then (acc, rest)
+        else split_on (append acc [elem]) (tl list) separator
+  in
+    match list with
+        LP :: rest -> if mem RP rest
+          then (let (acc, rest') = split_on [] rest RP in
+            let (inner_exp, _) = parse_plus acc in
+              (Parentheses inner_exp, rest'))
+          else failwith "閉じ括弧がありません"
+      | _ -> parse_int list
 
 let rec reverse_ast ast = match ast with
       PlusExp (a, PlusExp (b, c)) ->
