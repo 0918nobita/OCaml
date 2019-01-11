@@ -113,6 +113,7 @@ let rec generate_dt judgement = match judgement with
           generate_dt @@ Times (n1, n2, n)
         ]
       }
+  | EvalTo (Parentheses exp, n) -> generate_dt @@ EvalTo (exp, n)
 
 type word = Int of int | EvalToOp | PlusOp | TimesOp | LP | RP
 
