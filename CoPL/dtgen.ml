@@ -49,8 +49,9 @@ let rec string_of_dt dt nests =
 
 let rec eval_exp = function
     Value n -> n
-  | PlusExp (n1, n2) -> (eval_exp n1) + (eval_exp n2)
-  | TimesExp (n1, n2) -> (eval_exp n1) * (eval_exp n2)
+  | PlusExp (exp1, exp2) -> (eval_exp exp1) + (eval_exp exp2)
+  | TimesExp (exp1, exp2) -> (eval_exp exp1) * (eval_exp exp2)
+  | Parentheses exp -> (eval_exp exp)
 
 exception Wrong_judgement
 
