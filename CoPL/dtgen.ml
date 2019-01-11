@@ -8,12 +8,13 @@ let rec nat_string n =
     | _ -> "S(" ^ (nat_string (n - 1)) ^ ")"
   else failwith "自然数ではありません"
 
-type exp = Value of int | PlusExp of (exp * exp) | TimesExp of (exp * exp)
+type exp = Value of int | PlusExp of (exp * exp) | TimesExp of (exp * exp) | Parentheses of exp
 
 let rec string_of_exp = function
     Value n -> nat_string n
   | PlusExp (exp1, exp2) -> (string_of_exp exp1) ^ " + " ^ (string_of_exp exp2)
   | TimesExp (exp1, exp2) -> (string_of_exp exp1) ^ " * " ^ (string_of_exp exp2)
+  | Parentheses exp -> "( " ^ (string_of_exp exp) ^ " )"
 
 type judgement = Plus of int * int * int
               | Times of int * int * int
