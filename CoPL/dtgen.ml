@@ -126,7 +126,7 @@ let lex str = let is_integer str = Str.string_match (Str.regexp "^[1-9][0-9]*$")
         | "(" -> LP
         | ")" -> RP
         | _ -> raise SyntaxError) and
-    words = if str <> "" then String.split_on_char ' ' str else []
+    words = if str <> "" then filter (fun word -> word <> "") @@ String.split_on_char ' ' str else []
   in
     map lex_word words
 
