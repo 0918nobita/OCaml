@@ -112,7 +112,7 @@ let rec generate_dt judgement = match judgement with
         ]
       }
 
-type word = Int of int | EvalToOp | PlusOp | TimesOp
+type word = Int of int | EvalToOp | PlusOp | TimesOp | LP | RP
 
 exception SyntaxError
 
@@ -123,6 +123,8 @@ let lex str = let is_integer str = Str.string_match (Str.regexp "^[1-9][0-9]*$")
           "evalto" -> EvalToOp
         | "+" -> PlusOp
         | "*" -> TimesOp
+        | "(" -> LP
+        | ")" -> RP
         | _ -> raise SyntaxError) and
     words = if str <> "" then String.split_on_char ' ' str else []
   in
