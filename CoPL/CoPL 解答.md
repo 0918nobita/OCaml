@@ -554,7 +554,7 @@ evalto 7 by E-Let {
 
 ### 第 50 問
 
-```
+```ocaml
 |- let rec fact = fun n ->
   if n < 2 then 1 else n * fact (n - 1) in
     fact 3
@@ -618,7 +618,7 @@ evalto 6 by E-LetRec {
 
 ### 第 51 問
 
-```
+```ocaml
 |- let rec fib = fun n -> if n < 3 then 1 else fib (n - 1) + fib (n - 2) in
   fib 5
 evalto 5 by E-LetRec {
@@ -845,7 +845,7 @@ x |- let x = x * 2 in x + x ==> let . = #1 * 2 in #1 + #1 by Tr-Let {
 
 ### 第 60 問
 
-```
+```ocaml
 |- let x = let y = 3 - 2 in y * y in let y = 4 in x + y ==> let . = let . = 3 - 2 in #1 * #1 in let . = 4 in #2 + #1 by Tr-Let {
   |- let y = 3 - 2 in y * y ==> let . = 3 - 2 in #1 * #1 by Tr-Let {
     |- 3 - 2 ==> 3 - 2 by Tr-Minus {
@@ -864,6 +864,22 @@ x |- let x = x * 2 in x + x ==> let . = #1 * 2 in #1 + #1 by Tr-Let {
         x |- x ==> #1 by Tr-Var1 {}
       };
       x, y |- y ==> #1 by Tr-Var1 {}
+    }
+  }
+}
+```
+
+### 第 62 問
+
+```ocaml
+|- let y = 2 in fun x -> x + y ==> let . = 2 in fun . -> #1 + #2 by Tr-Let {
+  |- 2 ==> 2 by Tr-Int {};
+  y |- fun x -> x + y ==> fun . -> #1 + #2 by Tr-Fun {
+    y, x |- x + y ==> #1 + #2 by Tr-Plus {
+      y, x |- x ==> #1 by Tr-Var1 {};
+      y, x |- y ==> #2 by Tr-Var2 {
+        y |- y ==> #1 by Tr-Var1 {}
+      }
     }
   }
 }
