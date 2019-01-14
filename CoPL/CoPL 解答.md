@@ -1051,3 +1051,12 @@ true, 4 |- if #2 then #1 + 1 else #1 - 1 evalto 5 by E-IfT {
   }
 }
 ```
+
+### 第 63 問
+
+```ocaml
+|- let . = 2 in fun . -> #1 + #2 evalto (2)[fun . -> #1 + #2] by E-Let {
+  |- 2 evalto 2 by E-Int {};
+  2 |- fun . -> #1 + #2 evalto (2)[fun . -> #1 + #2] by E-Fun {}
+}
+```
