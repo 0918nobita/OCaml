@@ -1061,6 +1061,10 @@ true, 4 |- if #2 then #1 + 1 else #1 - 1 evalto 5 by E-IfT {
 }
 ```
 
+### 第 65 問
+
+[こちら](https://twitter.com/0918nobita/status/1084637334593662976)
+
 ### 第 67 問
 
 ```ocaml
