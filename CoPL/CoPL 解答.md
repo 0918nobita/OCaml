@@ -1804,3 +1804,14 @@ evalto 1 :: 3 :: [] by E-LetRec {
   }
 }
 ```
+
+## 単純型システム
+
+### 第 80 問
+
+```ocaml
+|- 3 + 5 : int by T-Plus {
+  |- 3 : int by T-Int {};
+  |- 5 : int by T-Int {}
+}
+```
