@@ -1815,3 +1815,22 @@ evalto 1 :: 3 :: [] by E-LetRec {
   |- 5 : int by T-Int {}
 }
 ```
+
+### 第 81 問
+
+```ocaml
+|- if 4 < 5 then 2 + 3 else 8 * 8 : int by T-If {
+  |- 4 < 5 : bool by T-Lt {
+    |- 4 : int by T-Int {};
+    |- 5 : int by T-Int {}
+  };
+  |- 2 + 3 : int by T-Plus {
+    |- 2 : int by T-Int {};
+    |- 3 : int by T-Int {}
+  };
+  |- 8 * 8 : int by T-Times {
+    |- 8 : int by T-Int {};
+    |- 8 : int by T-Int {}
+  }
+}
+```
