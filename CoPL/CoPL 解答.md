@@ -1981,3 +1981,22 @@ x : bool, y : int |- if x then y + 1 else y - 1 : int by T-If {
   }
 }
 ```
+
+### 第 92 問
+
+```ocaml
+|- let k = fun x -> fun y -> x in k 3 true : int by T-Let {
+  |- fun x -> fun y -> x : int -> bool -> int by T-Fun {
+    x : int |- fun y -> x : bool -> int by T-Fun {
+      x : int, y : bool |- x : int by T-Var {}
+    }
+  };
+  k : int -> bool -> int |- k 3 true : int by T-App {
+    k : int -> bool -> int |- k 3 : bool -> int by T-App {
+      k : int -> bool -> int |- k : int -> bool -> int by T-Var {};
+      k : int -> bool -> int |- 3 : int by T-Int {}
+    };
+    k : int -> bool -> int |- true : bool by T-Bool {}
+  }
+}
+```
