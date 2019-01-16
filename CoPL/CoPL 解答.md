@@ -1940,3 +1940,12 @@ x : bool, y : int |- if x then y + 1 else y - 1 : int by T-If {
   }
 }
 ```
+
+### 第 88 問
+
+```ocaml
+|- 4 :: [] : int list by T-Cons {
+  |- 4 : int by T-Int {};
+  |- [] : int list by T-Nil {}
+}
+```
