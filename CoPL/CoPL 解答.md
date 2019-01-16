@@ -1869,3 +1869,14 @@ x : bool, y : int |- if x then y + 1 else y - 1 : int by T-If {
   }
 }
 ```
+
+### 第 84 問
+
+```ocaml
+|- fun x -> x + 1 : int -> int by T-Fun {
+  x : int |- x + 1 : int by T-Plus {
+    x : int |- x : int by T-Var {};
+    x : int |- 1 : int by T-Int {};
+  }
+}
+```
