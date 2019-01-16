@@ -1971,3 +1971,13 @@ x : bool, y : int |- if x then y + 1 else y - 1 : int by T-If {
   }
 }
 ```
+
+### 第 91 問
+
+```ocaml
+|- fun x -> fun y -> x : bool -> int -> bool by T-Fun {
+  x : bool |- fun y -> x : int -> bool by T-Fun {
+    x : bool, y : int |- x : bool by T-Var {}
+  }
+}
+```
