@@ -1897,3 +1897,29 @@ x : bool, y : int |- if x then y + 1 else y - 1 : int by T-If {
   }
 }
 ```
+
+### 第 87 問
+
+```ocaml
+|- let max = fun x -> fun y -> if x < y then y else x in max 3 5 : int by T-Let {
+  |- fun x -> fun y -> if x < y then y else x : int -> int -> int by T-Fun {
+    x : int |- fun y -> if x < y then y else x : int -> int by T-Fun {
+      x : int, y : int |- if x < y then y else x : int by T-If {
+        x : int, y : int |- x < y : bool by T-Lt {
+          x : int, y : int |- x : int by T-Var {};
+          x : int, y : int |- y : int by T-Var {}
+        };
+        x : int, y : int |- y : int by T-Var {};
+        x : int, y : int |- x : int by T-Var {}
+      }
+    }
+  };
+  max : int -> int -> int |- max 3 5 : int by T-App {
+    max : int -> int -> int |- max 3 : int -> int by T-App {
+      max : int -> int -> int |- max : int -> int -> int by T-Var {};
+      max : int -> int -> int |- 3 : int by T-Int {}
+    };
+    max : int -> int -> int |- 5 : int by T-Int {}
+  }
+}
+```
