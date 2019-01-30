@@ -10,11 +10,10 @@ let substr str start len =
       then Some (String.sub str start len)
       else None
 
-let token str =
-  fun target position ->
-    let len = String.length target in
-      match substr target position len with
-          Some cut -> if cut = str
-            then Success (Str str, target, position + len)
-            else Failure
-        | None -> Failure
+let token str target position =
+  let len = String.length target in
+    match substr target position len with
+        Some cut -> if (print_string cut; print_newline (); print_string str; cut = str)
+          then Success (Str str, target, position + len)
+          else Failure
+      | None -> Failure
