@@ -43,3 +43,6 @@ let sequence parser_list target position =
 let option parser target position =
   let result = parser target position in
     if result = Failure then Success ([], target, position) else result
+
+let lazy_parser callback target position =
+  let parser = callback () in parser target position
