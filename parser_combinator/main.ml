@@ -1,4 +1,4 @@
-type ast = Str of string
+type ast = Str of string | Char of char
 
 type result = Success of (ast list * string * int) | Failure
 
@@ -9,6 +9,18 @@ let substr str start len =
     if str_len >= start + len
       then Some (String.sub str start len)
       else None
+
+let rec explode = function
+    "" -> []
+  | str -> String.sub str 0 1 :: explode (String.sub str 1 (String.length str - 1))
+
+let char str target position =
+  let list = explode str in
+    match substr target position 1 with
+        Some cut -> if List.mem cut list
+          then Success ([Char (String.get cut 0)], target, position + 1)
+          else Failure
+      | None -> Failure
 
 let token str target position =
   let str_len = String.length str in
