@@ -1,15 +1,20 @@
-open String
+type ast = Str of string | Seq of ast list
 
-type result = Success of (string * int) | Failure
+type result = Success of (ast * string * int) | Failure
 
-let parseHoge target position =
-  if length target >= 4 && sub target 0 4 = "hoge"
-    then Success ("hoge", position + 4)
-    else Failure
+type parser = string -> int -> result
+
+let substr str start len =
+  let str_len = String.length str in
+    if str_len >= start + len
+      then Some (String.sub str start len)
+      else None
 
 let token str =
-  let len = length str in
-    fun target position ->
-      if length target >= length str + position && sub target position len = str
-        then Success (str, position + len)
-        else Failure
+  fun target position ->
+    let len = String.length str in
+      match substr target position len with
+          Some cut -> if cut = str
+            then Success (Str str, target, position + len)
+            else Failure
+        | None -> Failure
