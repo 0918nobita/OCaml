@@ -39,3 +39,7 @@ let sequence parser_list target position =
         | Failure -> Failure) 
       | [] -> Success (ast_list, target, position) in
   sequence_inner parser_list target position []
+
+let option parser target position =
+  let result = parser target position in
+    if result = Failure then Success ([], target, position) else result
