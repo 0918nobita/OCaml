@@ -30,3 +30,12 @@ let rec choice parser_list target position =
       parser :: rest -> let result = parser target position in
         if result = Failure then choice rest target position else result
     | [] -> Failure
+
+let sequence parser_list target position =
+  let rec sequence_inner parser_list target position ast_list =
+    match parser_list with
+        parser :: rest -> (match parser target position with
+          Success (ast, str, p) -> sequence_inner rest str p @@ ast_list @ ast
+        | Failure -> Failure) 
+      | [] -> Success (ast_list, target, position) in
+  sequence_inner parser_list target position []
