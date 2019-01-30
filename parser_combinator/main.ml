@@ -12,7 +12,7 @@ let substr str start len =
 
 let token str =
   fun target position ->
-    let len = String.length str in
+    let len = String.length target in
       match substr target position len with
           Some cut -> if cut = str
             then Success (Str str, target, position + len)
