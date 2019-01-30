@@ -11,9 +11,9 @@ let substr str start len =
       else None
 
 let token str target position =
-  let len = String.length target in
-    match substr target position len with
-        Some cut -> if (print_string cut; print_newline (); print_string str; cut = str)
-          then Success (Str str, target, position + len)
+  let str_len = String.length str in
+    match substr target position str_len with
+        Some cut -> if cut = str
+          then Success (Str str, target, position + str_len)
           else Failure
       | None -> Failure
