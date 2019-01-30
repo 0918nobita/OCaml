@@ -27,6 +27,6 @@ let many parser target position =
 
 let rec choice parser_list target position =
   match parser_list with
-      parser :: rest -> print_string "こっちきた"; let result = parser target position in
+      parser :: rest -> let result = parser target position in
         if result = Failure then choice rest target position else result
     | [] -> Failure
