@@ -18,9 +18,15 @@ let token str target position =
           else Failure
       | None -> Failure
 
-let many parse target position =
-  let rec many_inner parse target position ast_list =
-    match parse target position with
-        Success (ast, str, p) -> many_inner parse str p @@ ast_list @ ast
+let many parser target position =
+  let rec many_inner parser target position ast_list =
+    match parser target position with
+        Success (ast, str, p) -> many_inner parser str p @@ ast_list @ ast
       | Failure -> Success (ast_list, target, position) in
-  many_inner parse target position []
+  many_inner parser target position []
+
+let rec choice parser_list target position =
+  match parser_list with
+      parser :: rest -> print_string "こっちきた"; let result = parser target position in
+        if result = Failure then choice rest target position else result
+    | [] -> Failure
