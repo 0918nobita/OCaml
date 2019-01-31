@@ -64,3 +64,11 @@ let non_zero_digit = char "123456789"
 let digit = choice [non_zero_digit; char "0"]
 
 exception Parse_error
+
+let chars_to_int chars =
+  let rec chars_to_str chars =
+    match chars with
+        (Char head) :: tail -> Char.escaped head ^ chars_to_str tail
+      | [] -> ""
+      | _ -> raise Parse_error in
+  int_of_string @@ chars_to_str chars
