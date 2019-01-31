@@ -1,4 +1,4 @@
-type ast = Str of string | Char of char
+type ast = Str of string | Char of char | Int of int
 
 type result = Success of (ast list * string * int) | Failure
 
