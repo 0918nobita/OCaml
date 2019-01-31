@@ -77,3 +77,18 @@ let integer target position =
   match sequence [option (char "+-"); non_zero_digit; option (many digit)] target position with
       Failure -> Failure
     | Success (ast, _, p) -> Success ([Int (chars_to_int ast)], target, p)
+
+type 'a stream = Nil | Cons of ('a * 'a stream lazy_t)
+
+let rec intgen low high =
+  if low > high then Nil else Cons (low, lazy (intgen (low + 1) high))
+
+exception Empty_stream
+
+let rec stream_ref s n =
+  match s with
+      Nil -> raise Empty_stream
+    | Cons (x, _) when n = 0 -> x;
+    | Cons (_, lazy tail) -> stream_ref tail (n - 1)
+
+
