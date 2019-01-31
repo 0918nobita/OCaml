@@ -58,3 +58,5 @@ let option parser target position =
 
 let lazy_parser callback target position =
   let parser = callback () in parser target position
+
+let non_zero_digit = char "123456789"
