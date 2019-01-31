@@ -72,3 +72,8 @@ let chars_to_int chars =
       | [] -> ""
       | _ -> raise Parse_error in
   int_of_string @@ chars_to_str chars
+
+let integer target position =
+  match sequence [option (char "+-"); non_zero_digit; option (many digit)] target position with
+      Failure -> Failure
+    | Success (ast, _, p) -> Success ([Int (chars_to_int ast)], target, p)
