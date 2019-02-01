@@ -16,6 +16,8 @@ let rec show_ast = function
   | Mul (left, right) -> "Mul(" ^ (show_ast left) ^ ", " ^ (show_ast right) ^ ")"
   | Div (left, right) -> "Div(" ^ (show_ast left) ^ ", " ^ (show_ast right) ^ ")"
 
+let show_ast_list l = "[" ^ List.fold_left (fun acc next -> acc ^ show_ast next ^ "; ") "" l ^ "]"
+
 type result = Success of (ast list * string * int) | Failure
 
 let substr str start len =
