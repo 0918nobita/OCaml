@@ -131,3 +131,15 @@ let term target position =
   match sequence [factor; option (many (sequence [char "*/"; factor]))] target position with
       Failure -> Failure
     | Success (ast, _, p) -> Success([reverse_ast @@ prioritize ast], target, p)
+
+let expr target position =
+  let rec prioritize = function
+      lhs :: Char '+' :: rhs :: [] -> Add (lhs, rhs)
+    | lhs :: Char '-' :: rhs :: [] -> Sub (lhs, rhs)
+    | lhs :: Char '+' :: rest -> Add (lhs, prioritize rest)
+    | lhs :: Char '-' :: rest -> Sub (lhs, prioritize rest)
+    | factor :: [] -> factor
+    | _ -> raise Parse_error in
+  match sequence [term; option (many (sequence [char "+-"; term]))] target position with
+      Failure -> Failure
+    | Success (ast, _, p) -> Success([reverse_ast @@ prioritize ast], target, p)
