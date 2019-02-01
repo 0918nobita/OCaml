@@ -107,7 +107,7 @@ let rec stream_ref s n =
     | Cons (x, _) when n = 0 -> x;
     | Cons (_, lazy tail) -> stream_ref tail (n - 1)
 
-let rec reverse_ast ast = match ast with
+let rec reverse_ast = function
     Add (a, Add (b, c)) ->
       Add (Add (reverse_ast a, reverse_ast b), reverse_ast c)
   | Sub (a, Sub (b, c)) ->
@@ -116,7 +116,7 @@ let rec reverse_ast ast = match ast with
       Mul (Mul (reverse_ast a, reverse_ast b), reverse_ast c)
   | Div (a, Div (b, c)) ->
       Div (Div (reverse_ast a, reverse_ast b), reverse_ast c)
-  | _ -> ast
+  | ast -> ast
 
 let factor = integer
 
