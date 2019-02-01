@@ -2,8 +2,6 @@ type ast = Str of string | Char of char | Int of int
 
 type result = Success of (ast list * string * int) | Failure
 
-type parser = string -> int -> result
-
 let substr str start len =
   let str_len = String.length str in
     if str_len >= start + len
