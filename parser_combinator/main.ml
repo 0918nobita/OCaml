@@ -117,3 +117,6 @@ let rec reverse_ast ast = match ast with
   | Div (a, Div (b, c)) ->
       Div (Div (reverse_ast a, reverse_ast b), reverse_ast c)
   | _ -> ast
+
+let factor = integer
+
