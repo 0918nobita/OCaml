@@ -120,3 +120,14 @@ let rec reverse_ast ast = match ast with
 
 let factor = integer
 
+let term target position =
+  let rec prioritize = function
+      lhs :: Char '*' :: rhs :: [] -> Mul (lhs, rhs)
+    | lhs :: Char '/' :: rhs :: [] -> Div (lhs, rhs)
+    | lhs :: Char '*' :: rest -> Mul (lhs, prioritize rest)
+    | lhs :: Char '/' :: rest -> Div (lhs, prioritize rest)
+    | factor :: [] -> factor
+    | _ -> raise Parse_error in
+  match sequence [factor; option (many (sequence [char "*/"; factor]))] target position with
+      Failure -> Failure
+    | Success (ast, _, p) -> Success([reverse_ast @@ prioritize ast], target, p)
