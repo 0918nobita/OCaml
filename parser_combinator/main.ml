@@ -7,6 +7,15 @@ type ast =
   | Mul of (ast * ast)
   | Div of (ast * ast)
 
+let rec show_ast = function
+    Str str -> "Str(" ^ str ^ " )"
+  | Char c -> "Char(" ^ (Char.escaped c) ^ ")"
+  | Int i -> "Int(" ^ (string_of_int i) ^ ")"
+  | Add (left, right) -> "Add(" ^ (show_ast left) ^ ", " ^ (show_ast right) ^ ")"
+  | Sub (left, right) -> "Sub(" ^ (show_ast left) ^ ", " ^ (show_ast right) ^ ")"
+  | Mul (left, right) -> "Mul(" ^ (show_ast left) ^ ", " ^ (show_ast right) ^ ")"
+  | Div (left, right) -> "Div(" ^ (show_ast left) ^ ", " ^ (show_ast right) ^ ")"
+
 type result = Success of (ast list * string * int) | Failure
 
 let substr str start len =
