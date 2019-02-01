@@ -1,4 +1,11 @@
-type ast = Str of string | Char of char | Int of int
+type ast =
+    Str of string
+  | Char of char
+  | Int of int
+  | Add of (ast * ast)
+  | Sub of (ast * ast)
+  | Mul of (ast * ast)
+  | Div of (ast * ast)
 
 type result = Success of (ast list * string * int) | Failure
 
