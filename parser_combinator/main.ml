@@ -138,7 +138,7 @@ let expr target position =
     | lhs :: Char '-' :: rhs :: [] -> Sub (lhs, rhs)
     | lhs :: Char '+' :: rest -> Add (lhs, prioritize rest)
     | lhs :: Char '-' :: rest -> Sub (lhs, prioritize rest)
-    | factor :: [] -> factor
+    | term :: [] -> term
     | _ -> raise Parse_error in
   match sequence [term; option (many (sequence [char "+-"; term]))] target position with
       Failure -> Failure
