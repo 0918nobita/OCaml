@@ -30,3 +30,5 @@ let rec string_of_expr_list = function
   | Cons (head, Empty) -> string_of_expr head
   | Cons (head, tail) -> string_of_expr head ^ ", " ^ string_of_expr_list tail
   | Concat (list1, list2) -> string_of_expr_list list1 ^ ", " ^ string_of_expr_list list2
+
+type sequent = Sequent of expr_list * expr_list
