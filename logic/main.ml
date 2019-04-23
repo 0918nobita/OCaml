@@ -35,3 +35,5 @@ type sequent = Sequent of expr_list * expr_list
 
 let string_of_sequent = function
     Sequent (premise, result) -> enclose @@ string_of_expr_list premise ^ " ---> " ^ enclose @@ string_of_expr_list result
+
+type inference_rule = InferenceRule of sequent list * sequent
