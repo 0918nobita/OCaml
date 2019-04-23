@@ -37,3 +37,7 @@ let string_of_sequent = function
     Sequent (premise, result) -> enclose @@ string_of_expr_list premise ^ " ---> " ^ enclose @@ string_of_expr_list result
 
 type inference_rule = InferenceRule of sequent list * sequent
+
+let string_of_inference_rule = function
+    InferenceRule (sequent_list, sequent) ->
+        enclose @@ String.concat "  " (List.map string_of_sequent sequent_list) ^ "  ⊢  " ^ string_of_sequent sequent
