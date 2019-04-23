@@ -23,3 +23,10 @@ type expr_list =
   | AbstractExprList of string
   | Cons of logical_expr * expr_list
   | Concat of expr_list * expr_list
+
+let rec string_of_expr_list = function
+    Empty -> ""
+  | AbstractExprList name -> name
+  | Cons (head, Empty) -> string_of_expr head
+  | Cons (head, tail) -> string_of_expr head ^ ", " ^ string_of_expr_list tail
+  | Concat (list1, list2) -> string_of_expr_list list1 ^ ", " ^ string_of_expr_list list2
