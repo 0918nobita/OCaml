@@ -41,3 +41,13 @@ type inference_rule = InferenceRule of sequent list * sequent
 let string_of_inference_rule = function
     InferenceRule (sequent_list, sequent) ->
         enclose @@ String.concat "  " (List.map string_of_sequent sequent_list) ^ "  ⊢  " ^ string_of_sequent sequent
+
+let () =
+  let
+    sequent1 = Sequent (AbstractExprList "Γ", Concat (AbstractExprList "Δ", AbstractExprList "A")) and
+    sequent2 = Sequent (Concat (AbstractExprList "A", AbstractExprList "Π"), AbstractExprList "Σ") and
+    sequent3 = Sequent (
+        Concat (AbstractExprList "Γ", AbstractExprList "Π"),
+        Concat (AbstractExprList "Δ", AbstractExprList "Σ"))
+  in
+    print_endline @@ string_of_inference_rule @@ InferenceRule ([sequent1; sequent2], sequent3)
