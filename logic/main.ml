@@ -32,3 +32,6 @@ let rec string_of_expr_list = function
   | Concat (list1, list2) -> string_of_expr_list list1 ^ ", " ^ string_of_expr_list list2
 
 type sequent = Sequent of expr_list * expr_list
+
+let string_of_sequent = function
+    Sequent (premise, result) -> enclose @@ string_of_expr_list premise ^ " ---> " ^ enclose @@ string_of_expr_list result
