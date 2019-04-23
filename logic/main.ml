@@ -6,3 +6,5 @@ type logical_expr =
   | Not of logical_expr
   | Imp of logical_expr * logical_expr
   | Var of string
+
+let enclose str = "(" ^ str ^ ")"
