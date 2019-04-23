@@ -17,3 +17,9 @@ let rec string_of_expr = function
   | Not (expr) -> "¬" ^ enclose @@ string_of_expr expr
   | Imp (lhs, rhs) -> enclose @@ string_of_expr lhs ^ " ⇒ " ^ string_of_expr rhs
   | Var (name) -> name
+
+type expr_list =
+    Empty
+  | AbstractExprList of string
+  | Cons of logical_expr * expr_list
+  | Concat of expr_list * expr_list
