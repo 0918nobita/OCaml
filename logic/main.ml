@@ -44,8 +44,8 @@ let string_of_inference_rule = function
 
 let () =
   let
-    sequent1 = Sequent (AbstractExprList "Γ", Concat (AbstractExprList "Δ", AbstractExprList "A")) and
-    sequent2 = Sequent (Concat (AbstractExprList "A", AbstractExprList "Π"), AbstractExprList "Σ") and
+    sequent1 = Sequent (AbstractExprList "Γ", Concat (AbstractExprList "Δ", Cons (Var "A", Empty))) and
+    sequent2 = Sequent (Cons (Var "A", AbstractExprList "Π"), AbstractExprList "Σ") and
     sequent3 = Sequent (
         Concat (AbstractExprList "Γ", AbstractExprList "Π"),
         Concat (AbstractExprList "Δ", AbstractExprList "Σ"))
