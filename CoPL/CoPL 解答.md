@@ -66,6 +66,26 @@ S(S(Z)) times S(Z) is S(S(Z)) by T-Succ {
 }
 ```
 
+### 第 8 問
+
+```ocaml
+S(S(Z)) times S(S(Z)) is S(S(S(S(Z)))) by T-Succ {
+  S(Z) times S(S(Z)) is S(S(Z)) by T-Succ {
+    Z times S(S(Z)) is Z by T-Zero {};
+    S(S(Z)) plus Z is S(S(Z)) by P-Succ {
+      S(Z) plus Z is S(Z) by P-Succ {
+        Z plus Z is Z by P-Zero {}
+      }
+    }
+  };
+  S(S(Z)) plus S(S(Z)) is S(S(S(S(Z)))) by P-Succ {
+    S(Z) plus S(S(Z)) is S(S(S(Z))) by P-Succ {
+      Z plus S(S(Z)) is S(S(Z)) by P-Zero {}
+    }
+  }
+}
+```
+
 ## 単純な式の評価
 
 ### 第 31 問
