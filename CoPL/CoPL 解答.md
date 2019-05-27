@@ -14,6 +14,16 @@ Z plus Z is Z by P-Zero {}
 Z plus S(S(Z)) is S(S(Z)) by P-Zero {}
 ```
 
+### 第 3 問
+
+```ocaml
+S(S(Z)) plus Z is S(S(Z)) by P-Succ {
+  S(Z) plus Z is S(Z) by P-Succ {
+    Z plus Z is Z by P-Zero {}
+  }
+}
+```
+
 ## 単純な式の評価
 
 ### 第 31 問
