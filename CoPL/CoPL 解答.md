@@ -8,6 +8,12 @@
 Z plus Z is Z by P-Zero {}
 ```
 
+### 第 2 問
+
+```ocaml
+Z plus S(S(Z)) is S(S(Z)) by P-Zero {}
+```
+
 ## 単純な式の評価
 
 ### 第 31 問
