@@ -32,6 +32,12 @@ S(Z) plus S(S(S(Z))) is S(S(S(S(Z)))) by P-Succ {
 }
 ```
 
+### 第 5 問
+
+```ocaml
+Z times S(S(Z)) is Z by T-Zero {}
+```
+
 ## 単純な式の評価
 
 ### 第 31 問
