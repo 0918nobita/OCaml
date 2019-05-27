@@ -24,6 +24,14 @@ S(S(Z)) plus Z is S(S(Z)) by P-Succ {
 }
 ```
 
+### 第 4 問
+
+```ocaml
+S(Z) plus S(S(S(Z))) is S(S(S(S(Z)))) by P-Succ {
+  Z plus S(S(S(Z))) is S(S(S(Z))) by P-Zero {}
+}
+```
+
 ## 単純な式の評価
 
 ### 第 31 問
