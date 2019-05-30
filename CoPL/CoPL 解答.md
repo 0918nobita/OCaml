@@ -86,6 +86,18 @@ S(S(Z)) times S(S(Z)) is S(S(S(S(Z)))) by T-Succ {
 }
 ```
 
+## 算術式の簡約
+
+### 第 21 問
+
+```ocaml
+Z + S(S(Z)) -*-> S(S(Z)) by MR-One {
+  Z + S(S(Z)) ---> S(S(Z)) by R-Plus {
+    Z plus S(S(Z)) is S(S(Z)) by P-Zero {}
+  }
+}
+```
+
 ## 単純な式の評価
 
 ### 第 31 問
