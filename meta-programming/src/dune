@@ -1,0 +1,4 @@
+(executable
+  (name main)
+  (public_name metapro)
+  (preprocess (pps ppx_addone)))

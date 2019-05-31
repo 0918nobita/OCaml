@@ -1,0 +1,6 @@
+(library
+  (name ppx_addone)
+  (public_name ppx_addone)
+  (kind ppx_rewriter)
+  (wrapped false)
+  (libraries ppxlib))
