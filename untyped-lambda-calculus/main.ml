@@ -29,13 +29,13 @@ let rec subst j s = function
   | (Var _) as var -> var
   | Abs term ->
       Abs (subst (j + 1) (shift 1 s) term)
-  | App (lhs, rhs) ->
-      App (subst j s lhs, subst j s rhs)
+  | App (t1, t2) ->
+      App (subst j s t1, subst j s t2)
 
 let rec eval = function
   | App (Abs t, (Abs _ as v)) ->
       shift (-1) @@ subst 0 (shift 1 v) t
   | App (Abs _ as v, t) ->
       App (eval v, t)
-  | App _ as term -> term
+  | Abs _ as term -> term
   | _ -> failwith "No rule applies"
