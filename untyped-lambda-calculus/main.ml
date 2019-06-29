@@ -33,8 +33,9 @@ let rec subst j s = function
       App (subst j s lhs, subst j s rhs)
 
 let rec eval = function
-  | App (Abs t, v) ->
+  | App (Abs t, (Abs _ as v)) ->
       shift (-1) @@ subst 0 (shift 1 v) t
-  | App (t1, t2) ->
-      App (eval t1, t2)
-  | term -> term
+  | App (Abs _ as v, t) ->
+      App (eval v, t)
+  | App _ as term -> term
+  | _ -> failwith "No rule applies"
