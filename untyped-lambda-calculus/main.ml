@@ -39,3 +39,11 @@ let rec eval = function
       App (eval v, t)
   | Abs _ as term -> term
   | _ -> failwith "No rule applies"
+
+(* succ = λ. λ. λ. 1 (2 1 0) *)
+let succ = Abs (Abs (Abs (App (Var 1, App (App (Var 2, Var 1), Var 0)))))
+
+let rec church_of_nat n =
+  if n > 0
+    then eval @@ App (succ, church_of_nat (n - 1))
+    else Abs (Abs (Var 0))
