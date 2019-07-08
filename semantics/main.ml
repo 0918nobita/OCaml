@@ -56,8 +56,8 @@ let rec reduce = function
       begin match (x, y) with
         | (Num a, Num b) -> Boolean (a < b)
         | (Error, _) | (_, Error) | (Boolean _, _) | (_, Boolean _) -> Error
-        | (a, b) when is_reducible a -> Multiply (reduce a, b)
-        | (a, b) -> Multiply (a, reduce b)
+        | (a, b) when is_reducible a -> LessThan (reduce a, b)
+        | (a, b) -> LessThan (a, reduce b)
       end
   | And (x, y) ->
       begin match (x, y) with
