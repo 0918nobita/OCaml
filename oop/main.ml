@@ -27,3 +27,9 @@ let counter2 = new counter_class
 let () =
   print_endline @@ string_of_int @@ counter1#get_count; (* => 1 *)
   print_endline @@ string_of_int @@ counter2#get_count (* => 2 *)
+
+let call_get_count instance = instance#get_count
+
+let () =
+  counter2#increase 3;
+  print_endline @@ string_of_int @@ call_get_count counter2 (* => 5 *)
