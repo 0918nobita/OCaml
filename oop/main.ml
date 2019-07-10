@@ -33,3 +33,29 @@ let call_get_count instance = instance#get_count
 let () =
   counter2#increase 3;
   print_endline @@ string_of_int @@ call_get_count counter2 (* => 5 *)
+
+type location = { line : int; chr : int }
+
+let string_of_location loc = string_of_int loc.line ^ ":" ^ string_of_int loc.chr
+
+let bof = { line = 0; chr = 0 }
+
+class ['a] ast_class ?(location = bof) (desc : 'a) =
+  object
+    val mutable desc = desc
+    val mutable loc = location
+    method get_desc = desc
+    method get_loc = loc
+    method update_loc diff =
+      loc <- {
+        line = loc.line + diff.line;
+        chr = if diff.line >= 1 then diff.chr else loc.chr + diff.chr
+      }
+  end
+
+let int_literal = new ast_class 7
+
+let () =
+  int_literal#update_loc { line = 2; chr = 1 };
+  print_endline @@ string_of_location int_literal#get_loc; (* => "2:1" *)
+  print_endline @@ string_of_int int_literal#get_desc (* => 7 *)
