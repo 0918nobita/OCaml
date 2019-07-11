@@ -40,22 +40,40 @@ let string_of_location loc = string_of_int loc.line ^ ":" ^ string_of_int loc.ch
 
 let bof = { line = 0; chr = 0 }
 
-class ['a] ast_class ?(location = bof) (desc : 'a) =
+let plus_loc base diff =
+  {
+    line = base.line + diff.line;
+    chr = if diff.line >= 1 then diff.chr else base.chr + diff.chr
+  }
+
+class virtual ['a] ast_class ?(location = bof) () =
   object
-    val mutable desc = desc
+    method virtual get_desc : 'a
+
     val mutable loc = location
-    method get_desc = desc
     method get_loc = loc
-    method update_loc diff =
-      loc <- {
-        line = loc.line + diff.line;
-        chr = if diff.line >= 1 then diff.chr else loc.chr + diff.chr
-      }
+    method virtual update_loc : location -> unit
   end
 
-let int_literal = new ast_class 7
+class int_literal (desc : int) =
+  object
+    inherit [int] ast_class ()
+    method get_desc = desc
+    method update_loc diff = loc <- plus_loc loc diff
+  end
 
-let () =
-  int_literal#update_loc { line = 2; chr = 1 };
-  print_endline @@ string_of_location int_literal#get_loc; (* => "2:1" *)
-  print_endline @@ string_of_int int_literal#get_desc (* => 7 *)
+class ['a, 'b] add (lhs, rhs : 'a ast_class * 'b ast_class) =
+  object
+    inherit ['a ast_class * 'b ast_class] ast_class ()
+    method get_desc = (lhs, rhs);
+    method update_loc diff =
+      begin
+        lhs#update_loc diff;
+        rhs#update_loc diff;
+        loc <- plus_loc loc diff
+      end
+  end
+
+let literal1 = new int_literal 3
+let literal2 = new int_literal 4
+let add_expr = new add (literal1, literal2)
