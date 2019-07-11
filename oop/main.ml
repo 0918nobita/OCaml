@@ -40,40 +40,52 @@ let string_of_location loc = string_of_int loc.line ^ ":" ^ string_of_int loc.ch
 
 let bof = { line = 0; chr = 0 }
 
-let plus_loc base diff =
+let combine_loc base diff =
   {
     line = base.line + diff.line;
     chr = if diff.line >= 1 then diff.chr else base.chr + diff.chr
   }
 
-class virtual ['a] ast_class ?(location = bof) () =
-  object
-    method virtual get_desc : 'a
+type ast_type = IntLiteral of int | Add | Mul
 
+class virtual ['a] ast (location : location) (children : 'a ast list) =
+  object
+    method virtual get_type : 'a
     val mutable loc = location
     method get_loc = loc
-    method virtual update_loc : location -> unit
-  end
-
-class int_literal (desc : int) =
-  object
-    inherit [int] ast_class ()
-    method get_desc = desc
-    method update_loc diff = loc <- plus_loc loc diff
-  end
-
-class ['a, 'b] add (lhs, rhs : 'a ast_class * 'b ast_class) =
-  object
-    inherit ['a ast_class * 'b ast_class] ast_class ()
-    method get_desc = (lhs, rhs);
+    method get_children = children
     method update_loc diff =
       begin
-        lhs#update_loc diff;
-        rhs#update_loc diff;
-        loc <- plus_loc loc diff
+        List.iter (fun child -> child#update_loc diff) children;
+        loc <- combine_loc loc diff
       end
   end
 
-let literal1 = new int_literal 3
-let literal2 = new int_literal 4
-let add_expr = new add (literal1, literal2)
+class expr_ast ?(location = bof) (ast_type : ast_type) (children : expr_ast list) =
+  object
+    inherit [ast_type] ast location children
+    method get_type = ast_type
+  end
+
+let literal1 = new expr_ast (IntLiteral 3) []
+let literal2 = new expr_ast (IntLiteral 4) []
+
+let add_expr = new expr_ast (Add) [literal1; literal2]
+let mul_expr = new expr_ast (Mul) [add_expr; literal1]
+
+type instruction =
+  | I32Const of int
+  | I32Add
+  | I32Mul
+
+let rec insts_of_expr_ast (ast : expr_ast) =
+  match ast#get_type with
+    | IntLiteral n -> [I32Const n]
+    | Add ->
+        (insts_of_expr_ast @@ List.nth ast#get_children 0) @
+        (insts_of_expr_ast @@ List.nth ast#get_children 1) @
+        [I32Add]
+    | Mul ->
+        (insts_of_expr_ast @@ List.nth ast#get_children 0) @
+        (insts_of_expr_ast @@ List.nth ast#get_children 1) @
+        [I32Mul]
