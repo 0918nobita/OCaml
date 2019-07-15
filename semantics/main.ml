@@ -31,7 +31,7 @@ let show (env, exp) =
         "if " ^ show_exp cond ^ " then " ^ show_exp t ^ " else " ^ show_exp f
     | Var ident -> ident
     | Let (ident, bound_expr, expr) ->
-        "let " ^ ident ^ " = " ^ show_exp bound_expr ^ " in " ^ show_exp bound_expr
+        "let " ^ ident ^ " = " ^ show_exp bound_expr ^ " in " ^ show_exp expr
     | Error -> "error"
   in
   let show_var_pair pair =
