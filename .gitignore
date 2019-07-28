@@ -8,3 +8,4 @@ _build
 a.out
 json/main
 json/reader
+ucorelib/main
