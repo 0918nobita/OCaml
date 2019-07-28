@@ -1,3 +1,10 @@
 _build
 .merlin
 *.install
+*.cmo
+*.cmi
+*.cmx
+*.o
+a.out
+json/main
+json/reader
