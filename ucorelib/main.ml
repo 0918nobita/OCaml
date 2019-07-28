@@ -13,5 +13,10 @@ let sub_utf8 str start len =
     then Some (Text.string_of @@ Text.sub text start len)
     else None
 
+let sei = UChar.int_of @@ Text.get_exn (Text.of_string_exn "生") 0
+
+let shi = UChar.int_of @@ Text.get_exn (Text.of_string_exn "死") 0
+
 let () =
-  print_endline @@ unwrap @@ sub_utf8 "あいうえお" 1 3
+  print_endline
+  @@ Text.string_of (Text.of_uchar (UChar.of_int_exn (sei land shi)))
