@@ -4,11 +4,18 @@ module UChar : sig
 
   val of_char : char -> t
 
+  val string_of : t -> string
+
 end = struct
 
   type t = int array
 
   let of_char c = [| Char.code c |]
+
+  let string_of uchar =
+    String.init
+      (Array.length uchar)
+      (fun n -> char_of_int @@ Array.get uchar n)
 
 end
 
