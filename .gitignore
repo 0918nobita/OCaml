@@ -1,5 +1,4 @@
 _build
-.merlin
 *.install
 *.cmo
 *.cmi
@@ -9,3 +8,4 @@ a.out
 json/main
 json/reader
 ucorelib/main
+utf8/main
