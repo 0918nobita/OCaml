@@ -7,18 +7,17 @@ let spec_list =
   ; ("--set-true", Arg.Set ref_bool, "Set the reference to true")
   ]
 
-let f_anon s =
-  begin
-    print_string "> f_anon";
-    print_endline s
-  end
+let files = ref []
+
+let f_anon s = files := !files @ [s]
 
 let () =
   begin
     Arg.parse spec_list f_anon "Usage";
-    print_endline "----------";
     print_string "ref_bool: ";
     print_endline (string_of_bool !ref_bool);
     print_string "ref_string: ";
-    print_endline !ref_string
+    print_endline !ref_string;
+    print_endline "files:";
+    List.iter (fun file -> print_endline @@ "  " ^ file) (!files)
   end
