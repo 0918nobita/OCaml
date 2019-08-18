@@ -9,7 +9,11 @@ let spec_list =
 
 let files = ref []
 
-let f_anon s = files := !files @ [s]
+let f_anon s =
+  begin
+    if not @@ Sys.file_exists s then raise @@ Arg.Bad (s ^ ": No such file");
+    files := !files @ [s]
+  end
 
 let () =
   begin
