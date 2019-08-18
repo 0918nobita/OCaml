@@ -4,7 +4,8 @@ let ref_string = ref "default"
 
 let spec_list =
   [ ("--set-string", Arg.Set_string ref_string, "Set the ref to the argument")
-  ; ("--set-true", Arg.Set ref_bool, "Set the reference to true")
+  ; ("--enable", Arg.Set ref_bool, "Set the reference to true")
+  ; ("--disable", Arg.Clear ref_bool, "Set the reference to false")
   ]
 
 let files = ref []
